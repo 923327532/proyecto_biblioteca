@@ -73,7 +73,8 @@ Las restricciones están implementadas en:
 ### 📖 Libros
 
 * Ruta: `/libros`
-* ![Libros](public/images/libros.png)
+* ![image](https://github.com/user-attachments/assets/fbd69ab8-64b4-425f-afa3-41f218c38cce)
+
 * Tabla responsiva con listado de libros.
 * `bibliotecario` puede:
 
@@ -83,7 +84,8 @@ Las restricciones están implementadas en:
 ### 🔖 Categorías
 
 * Ruta: `/categorias`
-* ![Categorías](public/images/categorias.png)
+* ![image](https://github.com/user-attachments/assets/7a68d11c-f22f-4058-bb4a-d6926569f2f0)
+
 * Solo accesible para `bibliotecario`.
 * CRUD de categorías.
 * Imagen decorativa en formularios.
@@ -91,7 +93,8 @@ Las restricciones están implementadas en:
 ### 👥 Gestión de Usuarios
 
 * Ruta: `/usuarios`
-* ![Usuarios](public/images/usuarios.png)
+![image](https://github.com/user-attachments/assets/d739e004-7687-4fb0-be20-85e5eefa3aa5)
+
 * Solo para `bibliotecario`.
 * Listado de usuarios.
 * Eliminación de usuarios.
@@ -99,7 +102,8 @@ Las restricciones están implementadas en:
 ### 📦 Préstamos
 
 * Ruta: `/prestamos`
-* ![Préstamos](public/images/prestamos.png)
+* ![image](https://github.com/user-attachments/assets/6eb91f9d-f8ac-4d8a-9783-9b810d0912e4)
+
 * Acceso para todos los usuarios.
 * Registro de nuevo préstamo.
 * Devolución de libros.
@@ -108,7 +112,8 @@ Las restricciones están implementadas en:
 ### 📊 Reportes
 
 * Ruta: `/reportes`
-* ![Reportes](public/images/reportes.png)
+* ![image](https://github.com/user-attachments/assets/1c6f5607-ef53-4cd5-a7d2-ae848931e1f3)
+
 * Solo para `bibliotecario`.
 * Reporte de:
 
