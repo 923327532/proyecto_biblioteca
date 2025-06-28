@@ -57,14 +57,15 @@ Las restricciones están implementadas en:
 ### 📝 Pantalla de Login
 
 * Ruta: `/login`
-* ![Login](public/images/login.png)
+* ![image](https://github.com/user-attachments/assets/d156997a-1a2c-42dd-9445-7e03946fcb83)
+
 * Valida credenciales contra Oracle.
 * Redirección a `/home` según rol.
 
 ### 📥 Registro de Usuarios
 
 * Ruta: `/register`
-* ![Registro](public/images/registro.png)
+* ![image](https://github.com/user-attachments/assets/bc55d00f-94ba-40bd-8974-17cfb761ce68)
 * Si está sin autenticar, sólo puede registrarse como `usuario`.
 * `bibliotecario` puede registrar otros usuarios o bibliotecarios.
 * Procedimiento Oracle: `agregar_usuario`.
