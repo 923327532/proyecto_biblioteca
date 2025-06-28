@@ -122,6 +122,7 @@
         <div>
             <strong>👋 Bienvenido, {{ Auth::user()->nombre }}</strong>
         </div>
+<<<<<<< HEAD
      <div class="nav-buttons">
     <a href="/libros" class="btn btn-outline-primary btn-sm"><i class="bi bi-book"></i> Libros</a>
     <a href="/prestamos" class="btn btn-outline-success btn-sm"><i class="bi bi-journal-check"></i> Préstamos</a>
@@ -135,6 +136,15 @@
 
 
 
+=======
+        <div class="nav-buttons">
+    <a href="/libros" class="btn btn-outline-primary btn-sm"><i class="bi bi-book"></i> Libros</a>
+    <a href="/prestamos" class="btn btn-outline-success btn-sm"><i class="bi bi-journal-check"></i> Préstamos</a>
+    <a href="/usuarios" class="btn btn-outline-warning btn-sm"><i class="bi bi-people"></i> Usuarios</a>
+    <a href="/categorias" class="btn btn-outline-secondary btn-sm"><i class="bi bi-tags"></i> Categorías</a>
+</div>
+
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
         <form action="/logout" method="POST" class="m-0">
             @csrf
             <button class="btn btn-danger btn-sm logout"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>

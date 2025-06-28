@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+<<<<<<< HEAD
         html, body {
             height: 100%;
             margin: 0;
@@ -31,6 +32,34 @@
             min-height: 520px; /* ✅ corregido */
         }
     </style>
+=======
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 500px;
+        min-height: 520px; /
+    }
+</style>
+
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
 </head>
 <body>
     <div class="login-card">
@@ -44,8 +73,12 @@
         @endif
 
         <form method="POST" action="/login">
+<<<<<<< HEAD
             @csrf <!-- ✅ este token es obligatorio -->
 
+=======
+            @csrf
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
             <div class="mb-3">
                 <label class="form-label">Correo electrónico</label>
                 <input type="email" name="email" class="form-control" required placeholder="tucorreo@email.com">

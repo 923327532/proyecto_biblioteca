@@ -3,19 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+=======
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
 use App\Models\Usuario;
 
 class AuthController extends Controller
 {
+<<<<<<< HEAD
     // Mostrar formulario de registro
+=======
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
     public function showRegisterForm()
     {
         return view('auth.register');
     }
 
+<<<<<<< HEAD
     // Registro de usuario o bibliotecario
     public function register(Request $request)
     {
@@ -51,11 +60,32 @@ class AuthController extends Controller
     }
 
     // Mostrar formulario de login
+=======
+    public function register(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string',
+            'email' => 'required|email|unique:usuarios,email',
+            'password' => 'required|min:4',
+        ]);
+
+        Usuario::create([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'rol' => $request->rol ?? 'usuario'
+        ]);
+
+        return redirect('/login')->with('success', 'Registro exitoso. Inicia sesión.');
+    }
+
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+<<<<<<< HEAD
     // Autenticación
     public function login(Request $request)
     {
@@ -64,20 +94,33 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
+=======
+    public function login(Request $request)
+    {
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             return redirect('/home');
         }
 
+<<<<<<< HEAD
         return back()->with('error', 'Credenciales incorrectas.');
     }
 
     // Logout
+=======
+        return back()->with('error', 'Credenciales incorrectas');
+    }
+
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
     public function logout()
     {
         Auth::logout();
         return redirect('/login');
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ebc6dc6c98c2a0d0e561349a318e9bada016eb32
