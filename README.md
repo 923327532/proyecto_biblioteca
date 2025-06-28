@@ -1,66 +1,209 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Tarea- Aplicación Laravel + Oracle con Procedimiento Almacenado
+# tarea- Aplicación Laravel + Oracle con Procedimiento Almacenado
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![image](https://github.com/user-attachments/assets/c95b58f8-2398-4752-8369-76ac6eca051b)
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Descripción General
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Esta aplicación Laravel permite demostrar la integración entre Laravel (PHP) y Oracle Database. Desarrollada para el Laboratorio 11, implementa un flujo completo desde el inicio de sesión hasta la ejecución de un procedimiento almacenado. El sistema permite ingresar usuarios, visualizar registros y sincronizar dos tablas mediante la sentencia `MERGE` ejecutada directamente desde Laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📂 Tecnologías utilizadas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Framework:** Laravel 10
+* **Lenguaje:** PHP 8.1
+* **Base de Datos:** Oracle Database 21c Express Edition (XE)
+* **ORM:** Eloquent (Laravel)
+* **Paquete conexión Oracle:** yajra/laravel-oci8
+* **Estilos:** Tailwind CSS, FontAwesome
+* **Frontend:** Blade Templates
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Instalación paso a paso
 
-## Laravel Sponsors
+### 1. Requisitos previos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* Tener PHP 8.1 instalado correctamente
+* Composer
+* Oracle XE corriendo y accesible (usuario con privilegios)
+* Instalar InstantClient y habilitar `ext-oci8` en PHP (confirmar en `php.ini`)
 
-### Premium Partners
+### 2. Crear el proyecto Laravel
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+composer create-project laravel/laravel:^9.0 Lab11
+cd Lab11
+composer require yajra/laravel-oci8:"^9.0"
+```
 
-## Contributing
+### 3. Instalar Breeze (login y registro)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer require laravel/breeze --dev
+php artisan breeze:install blade
+npm install && npm run dev
+php artisan migrate
+```
 
-## Code of Conduct
+### 4. Configurar la conexión a Oracle en `.env`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```env
+DB_CONNECTION=oracle
+DB_HOST=127.0.0.1
+DB_PORT=1521
+DB_DATABASE=XE
+DB_USERNAME=system
+DB_PASSWORD=Lopez2003
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🔧 Diseño del sistema
 
-## License
+### Tablas en Oracle
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sql
+CREATE TABLE tabla_origen (
+  id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nombre VARCHAR2(100),
+  email VARCHAR2(100) UNIQUE,
+  telefono VARCHAR2(20),
+  direccion VARCHAR2(200),
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tabla_destino (
+  id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nombre VARCHAR2(100),
+  email VARCHAR2(100) UNIQUE,
+  telefono VARCHAR2(20),
+  direccion VARCHAR2(200),
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Procedimiento almacenado en Oracle
+
+```sql
+CREATE OR REPLACE PROCEDURE actualizar_tabla_destino AS
+BEGIN
+  MERGE INTO tabla_destino d
+  USING tabla_origen o ON (d.email = o.email)
+  WHEN MATCHED THEN
+    UPDATE SET
+      d.nombre = o.nombre,
+      d.telefono = o.telefono,
+      d.direccion = o.direccion,
+      d.fecha_creacion = CURRENT_TIMESTAMP
+  WHEN NOT MATCHED THEN
+    INSERT (id, nombre, email, telefono, direccion, fecha_creacion)
+    VALUES (tabla_destino_seq.NEXTVAL, o.nombre, o.email, o.telefono, o.direccion, CURRENT_TIMESTAMP);
+  COMMIT;
+END;
+```
+
+---
+
+## 🧠 Lógica en Laravel
+
+### Modelo
+
+```php
+// app/Models/TablaOrigen.php
+class TablaOrigen extends Model {
+    protected $table = 'tabla_origen';
+    protected $fillable = ['nombre', 'email', 'telefono', 'direccion', 'fecha_creacion'];
+    public $timestamps = false;
+}
+```
+
+### Controlador
+
+```php
+// app/Http/Controllers/TablaOrigenController.php
+public function actualizar() {
+    try {
+        DB::connection()->getPdo()->exec("BEGIN actualizar_tabla_destino; END;");
+        return back()->with('success', 'Tabla destino actualizada correctamente.');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Error: ' . $e->getMessage());
+    }
+}
+```
+
+### Rutas
+
+```php
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [TablaOrigenController::class, 'vistaDashboard'])->name('dashboard');
+    Route::post('/actualizar-tabla', [TablaOrigenController::class, 'actualizar'])->name('actualizar.tabla');
+});
+```
+
+### Vista `dashboard.blade.php`
+
+Contiene el botón de sincronización, los mensajes de estado, y muestra registros recientes de ambas tablas.
+
+---
+
+## 📋 Flujo de funcionamiento
+
+1. El usuario accede a la aplicación y se registra o inicia sesión.
+2. Se le redirige al dashboard.
+3. Visualiza los registros recientes de ambas tablas.
+4. Al presionar el botón "Ejecutar Procedimiento", Laravel llama al procedimiento PL/SQL `actualizar_tabla_destino`.
+5. Este realiza un `MERGE` actualizando e insertando según los correos.
+6. Laravel muestra un mensaje de éxito y actualiza la visualización.
+
+---
+
+## 📸 Capturas necesarias para el informe
+
+* Bienvenida (`welcome.blade.php`)
+  ![image](https://github.com/user-attachments/assets/33a1c9e8-13c1-46b1-9511-f7ca437e3a97)
+
+* Registro (`register.blade.php`)
+  ![image](https://github.com/user-attachments/assets/494a80ce-aeb6-45fd-9cea-13c655c611e1)
+
+* Login (`login.blade.php`)
+    ![image](https://github.com/user-attachments/assets/e5bfb8d4-5938-4e2b-ba95-31cea2a580a1)
+* Dashboard antes y después de ejecutar el procedimiento
+  ![image](https://github.com/user-attachments/assets/421b99ea-21e6-43b3-9bd6-1968e9e6d1e9)
+
+* Vista de comparación entre `tabla_origen` y `tabla_destino`
+  ![image](https://github.com/user-attachments/assets/28183e20-86cc-4ae8-9e48-6ac028ced124)
+
+* Mensaje de éxito de actualización
+* Consola SQL con `SELECT COUNT(*) FROM tabla_destino;`
+
+---
+
+## 🧪 Datos para prueba
+
+
+
+```sql
+INSERT INTO tabla_origen (nombre, email, telefono, direccion)
+VALUES ('Carlos Pérez', 'cperez@example.com', '987654321', 'Av. Perú 123');
+COMMIT;
+```
+
+Luego ejecutar desde Laravel o desde SQL:
+
+```sql
+BEGIN actualizar_tabla_destino; END;
+```
+
+---
+
+## 🧑‍💻 Autor
+
+Roberto Carlos López Calle
+Estudiante - TECSUP
+
+---
+
+> Proyecto académico desarrollado para el curso de Base de Datos Avanzadas. Esta aplicación demuestra la integración Laravel + Oracle y el uso de procedimientos almacenados desde el backend PHP.
